@@ -1,41 +1,45 @@
 package ir.ac.kntu;
 
-import ir.ac.kntu.maputil.MapUtil;
-import org.checkerframework.checker.units.qual.C;
-
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         loader();
-        Leader leader = new Leader("Ali","user","pass");
+        //Leader leader = new Leader("Ali", "user", "pass");
         User user = new User();
         Menu menu = new Menu();
-        Scanner in = new Scanner(System.in);
-        int remote=10;
         System.out.println("Welcome.");
         //user = Tools.login();
-        while(true){
+        while (true) {
             System.out.println("Do you want to login? Saying no would exit the program.");
             boolean req = Tools.yesOrNo();
-            if(!req){
+            if (!req) {
                 break;
             }
-            user = Tools.login();
-            //assert user != null;
-            if(user.getUsername().equals("exit"))
+            //user = Tools.login();
+            while (req){
+                user = Tools.login();
+                if(user == null){
+                    System.out.println("Wrong input. Do you want to try logging in again?\nSaying no would exit the program.");
+                    req = Tools.yesOrNo();
+                }
+                else
+                    break;
+            }
+            assert user != null;
+            if (user.getUsername().equals("exit"))
                 break;
-            if(user.getClass() == Leader.class) {
+            if (user.getClass() == Leader.class) {
                 menu.tourLeader((Leader) user);
 
             }
-            if(user.getClass() == Admin.class){
+            if (user.getClass() == Admin.class) {
                 menu.admin((Admin) user);
             }
-            if(user.getClass() == Employee.class){
+            if (user.getClass() == Employee.class) {
                 menu.employee((Employee) user);
             }
-            if(user.getClass() == Customer.class){
+            if (user.getClass() == Customer.class) {
                 menu.customer((Customer) user);
             }
         }
@@ -65,18 +69,18 @@ public class Main {
 //       MapUtil.showMap("Tehran","Dubai");
     }
 
-    public static void loader()
-    {
-        Country iran = new Country("Iran",false);
-        City tehran = new City("Tehran",iran);
+    public static void loader() {
+        Country iran = new Country("Iran", false);
+        City tehran = new City("Tehran", iran);
         //tehran.("Meydan e Azadi");tehran.setPlaces("Meydan e Enghelab");tehran.setPlaces("Sa'd Abad Palace");
-        City mashhad = new City("Mashhad",iran);
+        City mashhad = new City("Mashhad", iran);
         //mashhad.setPlaces("Haram e Motahar");mashhad.setPlaces("Museum");
-        Country turkey = new Country("Turkey",true);
-        City istanbul = new City("Istanbul",turkey);
+        Country turkey = new Country("Turkey", true);
+        City istanbul = new City("Istanbul", turkey);
         //istanbul.setPlaces("Hagia Sophia");istanbul.setPlaces("Grand Bazaar");
-        Admin admin = new Admin("admin","1234","admin@mail.com","09125522331");
-        return;
+        Admin admin = new Admin("admin", "1234", "admin@mail.com", "09125522331");
     }
 
 }
+
+

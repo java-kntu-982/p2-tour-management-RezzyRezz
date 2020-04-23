@@ -1,8 +1,5 @@
 package ir.ac.kntu;
 
-import org.antlr.v4.runtime.atn.PredictionMode;
-
-import javax.tools.Tool;
 import java.util.Scanner;
 
 public class Menu {
@@ -22,8 +19,9 @@ public class Menu {
                 System.out.println("- National I.D: " + Tools.leaders.get(i).getMelliCode());
                 System.out.println("- Date of Birth: " + Tools.leaders.get(i).getDob().toString());
                 System.out.println("- Date of Employment" + Tools.leaders.get(i).getDoe().toString());
-                Tools.leaders.get(i).getKnownCities();
-                Tools.leaders.get(i).getKnownCountries();
+                System.out.println("-Known Cities:");
+                for (int j=0;j<Tools.leaders.get(i).getKnownCities().size();j++)
+                    System.out.println("  ."+Tools.leaders.get(i).getKnownCities().get(j).getName());
                 System.out.println("- Married: " + Tools.leaders.get(i).getMarried());
             }
         } else if (remote == 2) {
@@ -102,9 +100,9 @@ public class Menu {
             }
         } else if (remote == 5) {
             me.addCustomer();
-        } else if (remote == 0) {
-            return;
-        }
+        } //else if (remote == 0) {
+            //return;
+        //}
     }
 
     public void admin(Admin admin) {
@@ -131,8 +129,8 @@ public class Menu {
                     System.out.println("- National I.D: " + Tools.leaders.get(i).getMelliCode());
                     System.out.println("- Date of Birth: " + Tools.leaders.get(i).getDob().toString());
                     System.out.println("- Date of Employment" + Tools.leaders.get(i).getDoe().toString());
-                    Tools.leaders.get(i).getKnownCities();
-                    Tools.leaders.get(i).getKnownCountries();
+                    for (int j=0;j<Tools.leaders.get(i).getKnownCities().size();j++)
+                        System.out.println("  ."+Tools.leaders.get(i).getKnownCities().get(j).getName());
                     System.out.println("- Married: " + Tools.leaders.get(i).getMarried());
                 }
             } else if (remote == 2) {
@@ -209,9 +207,9 @@ public class Menu {
                 } else if (remote == 8) {
                     Tools.leaders.get(select).setMarried();
                 }
-            } else if (remote == 0) {
-                return;
-            }
+            } //else if (remote == 0) {
+               // return;
+           // }
         } else if (remote == 2) {
             System.out.println("Enter 1 to see all tour types.");
             System.out.println("Enter 2 to see all available tours.");
@@ -297,7 +295,7 @@ public class Menu {
                         System.out.println("Select the leader of the Tour");
                         for (i = 0; i < Tools.leaders.size(); i++) {
                             for (int j = 0; j < Tools.leaders.get(i).getKnownCities().size(); j++) {
-                                if (Tools.leaders.get(i).getKnownCities().get(j).equals(Tools.tours.get(select).getStartPoint().getCountry())) {
+                                if (Tools.leaders.get(i).getKnownCities().get(j).equals(Tools.tours.get(select).getStartPoint())) {
                                     System.out.println((i + 1) + ". " + Tools.leaders.get(i).getName());
                                 }
                             }
@@ -323,8 +321,7 @@ public class Menu {
                 Tools.tours.remove(remote);
             }
 
-        }
-        else if (remote == 3) {
+        } else if (remote == 3) {
             System.out.println("To view all locations enter 1:");
             remote = in.nextInt();
             if (remote == 1) {
@@ -351,8 +348,7 @@ public class Menu {
                 System.out.println("Enter anything to go back.");
                 remote = in.nextInt();
             }
-        }
-        else if(remote==4){
+        } else if (remote == 4) {
             System.out.println("Enter 1 to add a new admin.");
             System.out.println("Enter 2 to add a new tour leader.");
             System.out.println("Enter 3 to add a new employee");
@@ -363,55 +359,47 @@ public class Menu {
             System.out.println("Enter 8 to view all tour leaders");
 
             remote = in.nextInt();
-            if(remote==1){
+            if (remote == 1) {
                 admin.addAdmin();
-            }
-            else if(remote==2){
+            } else if (remote == 2) {
                 //-------------------------
                 admin.addTourLeader();
-            }
-            else if(remote==3){
+            } else if (remote == 3) {
                 admin.addEmployee();
-            }
-            else if(remote==4){
+            } else if (remote == 4) {
                 admin.addCustomer();
-            }
-            else if(remote==5){
-                for(int i=0;i<Tools.users.size();i++){
-                    if(Tools.users.get(i).getClass() == Admin.class){
-                        System.out.println("- "+Tools.users.get(i).getUsername());
+            } else if (remote == 5) {
+                for (int i = 0; i < Tools.users.size(); i++) {
+                    if (Tools.users.get(i).getClass() == Admin.class) {
+                        System.out.println("- " + Tools.users.get(i).getUsername());
                     }
                 }
-            }
-            else if(remote==6){
-                for(int i=0;i<Tools.users.size();i++){
-                    if(Tools.users.get(i).getClass() == Employee.class){
-                        System.out.println("- "+Tools.users.get(i).getUsername());
+            } else if (remote == 6) {
+                for (int i = 0; i < Tools.users.size(); i++) {
+                    if (Tools.users.get(i).getClass() == Employee.class) {
+                        System.out.println("- " + Tools.users.get(i).getUsername());
                     }
                 }
-            }
-            else if(remote==7){
-                for(int i=0;i<Tools.users.size();i++){
-                    if(Tools.users.get(i).getClass() == Customer.class){
-                        System.out.println("- "+Tools.users.get(i).getUsername());
+            } else if (remote == 7) {
+                for (int i = 0; i < Tools.users.size(); i++) {
+                    if (Tools.users.get(i).getClass() == Customer.class) {
+                        System.out.println("- " + Tools.users.get(i).getUsername());
                     }
                 }
-            }
-            else if(remote==8){
-                for(int i=0;i<Tools.users.size();i++){
-                    if(Tools.users.get(i).getClass() == Leader.class){
-                        System.out.println("- "+Tools.users.get(i).getUsername());
+            } else if (remote == 8) {
+                for (int i = 0; i < Tools.users.size(); i++) {
+                    if (Tools.users.get(i).getClass() == Leader.class) {
+                        System.out.println("- " + Tools.users.get(i).getUsername());
                     }
                 }
             }
             System.out.println("Enter anything to go back.");
             remote = in.nextInt();
-        }
-        else if (remote == 0)
-            return;
+        } //else if (remote == 0)
+            //return;
     }
 
-    public void employee(Employee employee){
+    public void employee(Employee employee) {
         int remote;
         System.out.println("Enter 1 for Tour Leader menus.");
         System.out.println("Enter 2 for Tour menus.");
@@ -435,8 +423,8 @@ public class Menu {
                     System.out.println("- National I.D: " + Tools.leaders.get(i).getMelliCode());
                     System.out.println("- Date of Birth: " + Tools.leaders.get(i).getDob().toString());
                     System.out.println("- Date of Employment" + Tools.leaders.get(i).getDoe().toString());
-                    Tools.leaders.get(i).getKnownCities();
-                    Tools.leaders.get(i).getKnownCountries();
+                    for (int j=0;j<Tools.leaders.get(i).getKnownCities().size();j++)
+                        System.out.println("  ."+Tools.leaders.get(i).getKnownCities().get(j).getName());
                     System.out.println("- Married: " + Tools.leaders.get(i).getMarried());
                 }
             } else if (remote == 2) {
@@ -513,11 +501,10 @@ public class Menu {
                 } else if (remote == 8) {
                     Tools.leaders.get(select).setMarried();
                 }
-            } else if (remote == 0) {
-                return;
-            }
-        }
-        else if (remote == 2) {
+            } //else if (remote == 0) {
+                //return;
+            //}
+        } else if (remote == 2) {
             System.out.println("Enter 1 to see all tour types.");
             System.out.println("Enter 2 to see all available tours.");
             System.out.println("Enter 3 to add a new tour.");
@@ -602,7 +589,7 @@ public class Menu {
                         System.out.println("Select the leader of the Tour");
                         for (i = 0; i < Tools.leaders.size(); i++) {
                             for (int j = 0; j < Tools.leaders.get(i).getKnownCities().size(); j++) {
-                                if (Tools.leaders.get(i).getKnownCities().get(j).equals(Tools.tours.get(select).getStartPoint().getCountry())) {
+                                if (Tools.leaders.get(i).getKnownCities().get(j).equals(Tools.tours.get(select).getStartPoint())) {
                                     System.out.println((i + 1) + ". " + Tools.leaders.get(i).getName());
                                 }
                             }
@@ -618,8 +605,7 @@ public class Menu {
                     }
                 }
             }
-        }
-        else if (remote == 3) {
+        } else if (remote == 3) {
             System.out.println("To view all locations enter 1:");
             remote = in.nextInt();
             if (remote == 1) {
@@ -646,45 +632,41 @@ public class Menu {
                 System.out.println("Enter anything to go back.");
                 remote = in.nextInt();
             }
-        }
-        else if(remote==4){
+        } else if (remote == 4) {
             employee.addCustomer();
-        }
-        else if (remote == 0)
-            return;
+        } //else if (remote == 0)
+            //return;
     }
 
-    public void customer(Customer customer){
+    public void customer(Customer customer) {
         System.out.println("Enter 1 to view all tour leaders.");
         System.out.println("Enter 2 to view all tours.");
         System.out.println("Enter 0 to log out.");
 
         Scanner in = new Scanner(System.in);
         int remote = in.nextInt();
-        if(remote==1){
+        if (remote == 1) {
             System.out.println("List of all Leaders:");
             for (int i = 0; i < Tools.leaders.size(); i++) {
                 System.out.println((i + 1) + ". " + Tools.leaders.get(i).getName());
                 System.out.println("- National I.D: " + Tools.leaders.get(i).getMelliCode());
                 System.out.println("- Date of Birth: " + Tools.leaders.get(i).getDob().toString());
                 System.out.println("- Date of Employment" + Tools.leaders.get(i).getDoe().toString());
-                Tools.leaders.get(i).getKnownCities();
-                Tools.leaders.get(i).getKnownCountries();
+                for (int j=0;j<Tools.leaders.get(i).getKnownCities().size();j++)
+                    System.out.println("  ."+Tools.leaders.get(i).getKnownCities().get(j).getName());
                 System.out.println("- Married: " + Tools.leaders.get(i).getMarried());
             }
             System.out.println("Enter any number to go back:");
             remote = in.nextInt();
-        }
-        else if (remote == 2) {
+        } else if (remote == 2) {
             for (int i = 0; i < Tools.tours.size(); i++) {
                 System.out.println((i + 1) + ". " + Tools.tours.get(i).getStartPoint().getName());
                 System.out.println("From " + Tools.tours.get(i).getStartDate() + " to " + Tools.tours.get(i).getEndDate());
             }
             System.out.println("Enter any number to go back:");
             remote = in.nextInt();
-        }
-        else if(remote==0)
-            return;
+        } //else if (remote == 0)
+            //return;
     }
 }
 

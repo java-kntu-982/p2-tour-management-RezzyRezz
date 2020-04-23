@@ -1,6 +1,5 @@
 package ir.ac.kntu;
 
-import javax.tools.Tool;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -18,7 +17,7 @@ public class Tour {
     private Date startDate;
     private Date endDate;
 
-    public void newTour(){
+    public void newTour() {
         Scanner in = new Scanner(System.in);
         setLengthInDays();
         setPrice();
@@ -29,9 +28,9 @@ public class Tour {
         int select = Tools.listChooser(Tools.countries);
         Country country = Tools.countries.get(select);
         System.out.println("Select the city the tour starts at:");
-        for(int i=0;i<Tools.cities.size();i++){
-            if(Tools.cities.get(i).getCountry().equals(country)){
-                System.out.println((i+1)+". "+Tools.cities.get(i).getName());
+        for (int i = 0; i < Tools.cities.size(); i++) {
+            if (Tools.cities.get(i).getCountry().equals(country)) {
+                System.out.println((i + 1) + ". " + Tools.cities.get(i).getName());
             }
         }
         select = in.nextInt();
@@ -42,19 +41,19 @@ public class Tour {
         select = Tools.listChooser(Tools.countries);
         country = Tools.countries.get(select);
         System.out.println("Select the city the tour ends at:");
-        for(int i=0;i<Tools.cities.size();i++){
-            if(Tools.cities.get(i).getCountry().equals(country)){
-                System.out.println((i+1)+". "+Tools.cities.get(i).getName());
+        for (int i = 0; i < Tools.cities.size(); i++) {
+            if (Tools.cities.get(i).getCountry().equals(country)) {
+                System.out.println((i + 1) + ". " + Tools.cities.get(i).getName());
             }
         }
         select = in.nextInt();
         select--;
         setEndPoint(Tools.cities.get(select));
         System.out.println("Select the leader of the Tour");
-        for(int i=0;i<Tools.leaders.size();i++){
-            for(int j=0;j<Tools.leaders.get(i).getKnownCities().size();j++){
-                if(Tools.leaders.get(i).getKnownCities().get(j).equals(startPoint)){
-                    System.out.println((i+1)+". "+Tools.leaders.get(i).getName());
+        for (int i = 0; i < Tools.leaders.size(); i++) {
+            for (int j = 0; j < Tools.leaders.get(i).getKnownCities().size(); j++) {
+                if (Tools.leaders.get(i).getKnownCities().get(j).equals(startPoint)) {
+                    System.out.println((i + 1) + ". " + Tools.leaders.get(i).getName());
                 }
             }
         }
@@ -65,7 +64,8 @@ public class Tour {
         setEndDate();
         addToList();
     }
-    public void setStartDate(){
+
+    public void setStartDate() {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter the year the tour starts:");
         int year = in.nextInt();
@@ -73,14 +73,14 @@ public class Tour {
         int month = in.nextInt();
         System.out.println("Enter the day the tour starts");
         int day = in.nextInt();
-        Date temp = new Date(year,month,day);
-        startDate = temp;
+        startDate = new Date(year, month, day);
     }
 
     public String getStartDate() {
         return startDate.toString();
     }
-    public void setEndDate(){
+
+    public void setEndDate() {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter the year the tour Ends:");
         int year = in.nextInt();
@@ -88,66 +88,77 @@ public class Tour {
         int month = in.nextInt();
         System.out.println("Enter the day the tour Ends");
         int day = in.nextInt();
-        Date temp = new Date(year,month,day);
-        endDate = temp;
+        endDate = new Date(year, month, day);
     }
 
     public String getEndDate() {
         return endDate.toString();
     }
-    public void setLengthInDays(){
+
+    public void setLengthInDays() {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter the length of the tour:");
         lengthInDays = in.nextInt();
     }
-    public int getLengthInDays(){
+
+    public int getLengthInDays() {
         return lengthInDays;
     }
-    public void setPrice(){
+
+    public void setPrice() {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter the price of the tour:");
         price = in.nextInt();
     }
-    public int getPrice(){
+
+    public int getPrice() {
         return price;
     }
-    public void setMinSize(){
+
+    public void setMinSize() {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter the minimum participants required for the tour:");
         minSize = in.nextInt();
     }
-    public int getMinSize(){
+
+    public int getMinSize() {
         return minSize;
     }
-    public void setMaxSize(){
+
+    public void setMaxSize() {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter the maximum participants required for the tour:");
         maxSize = in.nextInt();
     }
-    public int getMaxSize(){
+
+    public int getMaxSize() {
         return maxSize;
     }
 
-    public void setStartPoint(City city){
+    public void setStartPoint(City city) {
         startPoint = city;
     }
-    public City getStartPoint(){
+
+    public City getStartPoint() {
         return startPoint;
     }
-    public void setEndPoint(City city){
+
+    public void setEndPoint(City city) {
         endPoint = city;
     }
-    public City getEndPoint(){
+
+    public City getEndPoint() {
         return endPoint;
     }
-    public void setSights(){
+
+    public void setSights() {
         System.out.println("Enter the name of the sight:");
         Scanner in = new Scanner(System.in);
         String str = in.nextLine();
         sights.addLast(str);
         System.out.println("Do you want to add another sight?");
         boolean ans = Tools.yesOrNo();
-        while(ans){
+        while (ans) {
             System.out.println("Enter the name of the sight:");
             str = in.nextLine();
             sights.addLast(str);
@@ -155,29 +166,32 @@ public class Tour {
             ans = Tools.yesOrNo();
         }
     }
-    public void getSights(){
-        if(sights.size()<1){
+
+    public void getSights() {
+        if (sights.size() < 1) {
             System.out.println("No sights have been entered.");
-        }
-        else {
+        } else {
             for (int i = 0; i < sights.size(); i++) {
                 System.out.println((i + 1) + ". " + sights.get(i));
             }
         }
     }
-    public void setLeader(Leader leader){
+
+    public void setLeader(Leader leader) {
         this.leader = leader;
     }
-    public Leader getLeader(){
+
+    public Leader getLeader() {
         return leader;
     }
-    public void setId(){
+
+    public void setId() {
         System.out.println("Enter the name/I.D for the tour:");
         Scanner in = new Scanner(System.in);
         id = in.nextLine();
     }
 
-    public void addToList(){
+    public void addToList() {
         Tools.tours.addLast(this);
     }
 }

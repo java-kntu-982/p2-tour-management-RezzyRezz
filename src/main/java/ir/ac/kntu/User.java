@@ -1,4 +1,5 @@
 package ir.ac.kntu;
+
 import java.util.Scanner;
 
 public class User {
@@ -8,7 +9,7 @@ public class User {
     private String email;
     private String phone;
 
-    public User(String username,String password,String email,String phone){
+    public User(String username, String password, String email, String phone) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -16,20 +17,22 @@ public class User {
         addToList();
     }
 
-    public User(){
+    public User() {
 
     }
-    public User(String str){
+
+    public User(String str) {
         username = str;
     }
 
-    public void addToList(){
+    public void addToList() {
         Tools.users.addLast(this);
     }
-    public void setUsername(){
+
+    public void setUsername() {
         System.out.println("Enter username:");
         Scanner in = new Scanner(System.in);
-        username= in.nextLine();
+        username = in.nextLine();
     }
 
     public void setUsername(String username) {
@@ -40,11 +43,10 @@ public class User {
         return username;
     }
 
-    public void setPassword()
-    {
+    public void setPassword() {
         System.out.println("Enter password:");
         Scanner in = new Scanner(System.in);
-        password= in.nextLine();
+        password = in.nextLine();
     }
 
     public void setPassword(String password) {
@@ -58,7 +60,7 @@ public class User {
     public void setEmail() {
         System.out.println("Enter email address:");
         Scanner in = new Scanner(System.in);
-        email= in.nextLine();
+        email = in.nextLine();
     }
 
     public void setEmail(String email) {
@@ -69,10 +71,10 @@ public class User {
         return email;
     }
 
-    public void setPhone(){
+    public void setPhone() {
         System.out.println("Enter phone number:");
         Scanner in = new Scanner(System.in);
-        phone= in.nextLine();
+        phone = in.nextLine();
     }
 
     public void setPhone(String phone) {
