@@ -1,203 +1,183 @@
 package ir.ac.kntu;
 
+import javax.tools.Tool;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-
-public class Tour
-{
-    //private boolean foreign;
-    private Country country;
-    private int days;
+public class Tour {
+    //private String name;
+    private int lengthInDays;
     private int price;
-    private int minParticipants;
-    private int maxParticipants;
-    private Town startsAt;
-    private Town endsAt;
+    private int minSize;
+    private int maxSize;
+    private City startPoint;
+    private City endPoint;
+    private LinkedList<String> sights = new LinkedList<>();
+    private Leader leader;
+    private String id;
     private Date startDate;
     private Date endDate;
 
-    public void setStartDate()
-    {
-        System.out.println("Enter the year the tour starts at:");
+    public void newTour(){
         Scanner in = new Scanner(System.in);
-        int year = in.nextInt();
-        System.out.println("Enter the month the tour starts at: ");
-        int month = in.nextInt();
-        System.out.println("Enter the day the tour starts at: ");
-        int day = in.nextInt();
-        startDate = new Date(year,month,day);
-    }
-    public Date getStartDate()
-    {
-        return startDate;
-    }
-    public void setEndDate()
-    {
-        System.out.println("Enter the year the tour ends at:");
-        Scanner in = new Scanner(System.in);
-        int year = in.nextInt();
-        System.out.println("Enter the month the tour ends at: ");
-        int month = in.nextInt();
-        System.out.println("Enter the day the tour ends at: ");
-        int day = in.nextInt();
-        endDate = new Date(year,month,day);
-    }
-    public Date getEndDate()
-    {
-        return endDate;
-    }
-    public void newTour()
-    {
-        setCountry();
-        this.setDays();
-        this.setPrice();
-        setStartsAt();
-        setEndsAt();
-        setMaxParticipants();
-        setMinParticipants();
-        addTourType();
-        finalizeTour();
-        return;
-    }
-    public void addTourType()
-    {
-        if(List.tourType.size()==0)
-            List.tourType.addLast(startsAt.getName());
-        else
-        {
-            int flag=0;
-            for(int i=0;i<List.tourType.size();i++)
-            {
-                if(List.tourType.get(i)==startsAt.getName())
-                {
-                    flag=1;
-                    break;
+        setLengthInDays();
+        setPrice();
+        setMinSize();
+        setMaxSize();
+        System.out.println("Select the Country the tour starts at:");
+        Tools.listPrinter(Tools.countries);
+        int select = Tools.listChooser(Tools.countries);
+        Country country = Tools.countries.get(select);
+        System.out.println("Select the city the tour starts at:");
+        for(int i=0;i<Tools.cities.size();i++){
+            if(Tools.cities.get(i).getCountry().equals(country)){
+                System.out.println((i+1)+". "+Tools.cities.get(i).getName());
+            }
+        }
+        select = in.nextInt();
+        select--;
+        setStartPoint(Tools.cities.get(select));
+        System.out.println("Select the Country the tour ends at:");
+        Tools.listPrinter(Tools.countries);
+        select = Tools.listChooser(Tools.countries);
+        country = Tools.countries.get(select);
+        System.out.println("Select the city the tour ends at:");
+        for(int i=0;i<Tools.cities.size();i++){
+            if(Tools.cities.get(i).getCountry().equals(country)){
+                System.out.println((i+1)+". "+Tools.cities.get(i).getName());
+            }
+        }
+        select = in.nextInt();
+        select--;
+        setEndPoint(Tools.cities.get(select));
+        System.out.println("Select the leader of the Tour");
+        for(int i=0;i<Tools.leaders.size();i++){
+            for(int j=0;j<Tools.leaders.get(i).getKnownCities().size();j++){
+                if(Tools.leaders.get(i).getKnownCities().get(j).equals(startPoint)){
+                    System.out.println((i+1)+". "+Tools.leaders.get(i).getName());
                 }
             }
-            if(flag==0)
-                List.tourType.addLast(startsAt.getName());
         }
-   }
-    public void setCountry()
-    {
-        System.out.println("Select the country:");
-        for(int i=0;i<List.countries.size();i++)
-        {
-            System.out.println((i+1)+". "+List.countries.get(i).getName());
-        }
+        int ans = Tools.listChooser(Tools.leaders);
+        setLeader(Tools.leaders.get(ans));
+        setId();
+        setStartDate();
+        setEndDate();
+        addToList();
+    }
+    public void setStartDate(){
         Scanner in = new Scanner(System.in);
-        int select = in.nextInt();
-        select--;
-        country = List.countries.get(select);
+        System.out.println("Enter the year the tour starts:");
+        int year = in.nextInt();
+        System.out.println("Enter the month the tour starts");
+        int month = in.nextInt();
+        System.out.println("Enter the day the tour starts");
+        int day = in.nextInt();
+        Date temp = new Date(year,month,day);
+        startDate = temp;
     }
-    public Country getCountry()
-    {
-        return country;
+
+    public String getStartDate() {
+        return startDate.toString();
     }
-    public void setDays()
-    {
-        System.out.println("Enter the length of the tour in days:");
-        Scanner input = new Scanner(System.in);
-        days = input.nextInt();
+    public void setEndDate(){
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter the year the tour Ends:");
+        int year = in.nextInt();
+        System.out.println("Enter the month the tour Ends");
+        int month = in.nextInt();
+        System.out.println("Enter the day the tour Ends");
+        int day = in.nextInt();
+        Date temp = new Date(year,month,day);
+        endDate = temp;
     }
-    public void setDays(int x)
-    {
-        days = x;
+
+    public String getEndDate() {
+        return endDate.toString();
     }
-    public int getDays()
-    {
-        return days;
+    public void setLengthInDays(){
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter the length of the tour:");
+        lengthInDays = in.nextInt();
     }
-    public void setPrice()
-    {
-        System.out.println("Enter the price of the tour in Tomans:");
-        Scanner input = new Scanner(System.in);
-        price = input.nextInt();
+    public int getLengthInDays(){
+        return lengthInDays;
     }
-    public void setPrice(int x)
-    {
-        price = x;
+    public void setPrice(){
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter the price of the tour:");
+        price = in.nextInt();
     }
-    public int getPrice()
-    {
+    public int getPrice(){
         return price;
     }
-    public void setMinParticipants()
-    {
-        System.out.println("Enter the minimum amount of participants for tour:");
-        Scanner input = new Scanner(System.in);
-        minParticipants = input.nextInt();
-    }
-    public void setMinParticipants(int x)
-    {
-        minParticipants = x;
-    }
-    public int getMinParticipants()
-    {
-        return minParticipants;
-    }
-    public void setMaxParticipants()
-    {
-        System.out.println("Enter the maximum amount of participants for tour:");
+    public void setMinSize(){
         Scanner in = new Scanner(System.in);
-        maxParticipants = in.nextInt();
+        System.out.println("Enter the minimum participants required for the tour:");
+        minSize = in.nextInt();
     }
-    public void setMaxParticipants(int x)
-    {
-        maxParticipants = x;
+    public int getMinSize(){
+        return minSize;
     }
-    public int getMaxParticipants()
-    {
-        return maxParticipants;
+    public void setMaxSize(){
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter the maximum participants required for the tour:");
+        maxSize = in.nextInt();
     }
-    public void setStartsAt()
-    {
-            System.out.println("Select the town the tour starts at:");
-            for(int i=0;i<country.getTownListSize();i++)
-            {
-                System.out.println((i+1)+". "+country.getTowns(i).getName());
-            }
-            Scanner in = new Scanner(System.in);
-            int select = in.nextInt();
-            select--;
-            startsAt = country.getTowns(select);
+    public int getMaxSize(){
+        return maxSize;
     }
-    public void setStartsAt(Town town)
-    {
-        startsAt = town;
+
+    public void setStartPoint(City city){
+        startPoint = city;
     }
-    public Town getStartsAt()
-    {
-        return startsAt;
+    public City getStartPoint(){
+        return startPoint;
     }
-    public void setEndsAt()
-    {
-        if(country.getForeign()==true)
-            endsAt = country.getCapital();
-        else
-        {
-            System.out.println("Select the town the tour ends at:");
-            for(int i=0;i<country.getTownListSize();i++)
-            {
-                System.out.println((i+1)+". "+country.getTowns(i).getName());
-            }
-            Scanner in = new Scanner(System.in);
-            int select = in.nextInt();
-            select--;
-            endsAt = country.getTowns(select);
+    public void setEndPoint(City city){
+        endPoint = city;
+    }
+    public City getEndPoint(){
+        return endPoint;
+    }
+    public void setSights(){
+        System.out.println("Enter the name of the sight:");
+        Scanner in = new Scanner(System.in);
+        String str = in.nextLine();
+        sights.addLast(str);
+        System.out.println("Do you want to add another sight?");
+        boolean ans = Tools.yesOrNo();
+        while(ans){
+            System.out.println("Enter the name of the sight:");
+            str = in.nextLine();
+            sights.addLast(str);
+            System.out.println("Do you want to add another sight?");
+            ans = Tools.yesOrNo();
         }
     }
-    public void setEndsAt(Town town)
-    {
-        endsAt = town;
+    public void getSights(){
+        if(sights.size()<1){
+            System.out.println("No sights have been entered.");
+        }
+        else {
+            for (int i = 0; i < sights.size(); i++) {
+                System.out.println((i + 1) + ". " + sights.get(i));
+            }
+        }
     }
-    public Town getEndsAt()
-    {
-        return endsAt;
+    public void setLeader(Leader leader){
+        this.leader = leader;
     }
-    public void finalizeTour()
-    {
-        List.tours.addLast(this);
+    public Leader getLeader(){
+        return leader;
+    }
+    public void setId(){
+        System.out.println("Enter the name/I.D for the tour:");
+        Scanner in = new Scanner(System.in);
+        id = in.nextLine();
+    }
+
+    public void addToList(){
+        Tools.tours.addLast(this);
     }
 }
